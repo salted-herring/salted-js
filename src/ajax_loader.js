@@ -59,7 +59,7 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 						_self.callback(tiles);
 					}
 					
-					if ($(_self.linkSelector).length == 0) {
+					if ($(_self.linkSelector).length === 0) {
 						_self.destruct();
 					}					
 				});
@@ -79,7 +79,6 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		if (_self.completeIndicator) {
 			$(_self.destination).append(_self.completeIndicator);
 		}
-		delete _self;
 		delete this.load;
 		delete this.ajaxing;
 		delete this.abort;
@@ -92,7 +91,7 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		delete this.loadingIndicator;
 		delete this.completeIndicator;
 		delete this.destruct;
-	}
+	};
 	
 	return this;
-}
+};

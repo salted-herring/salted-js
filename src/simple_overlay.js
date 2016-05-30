@@ -82,7 +82,7 @@ function HijackAlert() {
 		if (!title) { title = 'Message'; }
 		var msgbox = new simplayer(title, msg);
 		msgbox.show();
-	}
+	};
 }
 
 

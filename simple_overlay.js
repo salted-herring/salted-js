@@ -1,4 +1,4 @@
-var simplayer = function(title,content,buttons,zindex,maxWidth) {
+var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
 	this.tray			=	$('<div />').attr('id','simplayer-tray');
 	this.title			=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content			=	$('<div />').addClass('simplayer-content').html(content);
@@ -35,10 +35,10 @@ var simplayer = function(title,content,buttons,zindex,maxWidth) {
 	
 	_wrapper = this.wrapper;
 	
-	if (zindex) {
-		this.tray.css('z-index', zindex);
-		this.wrapper	.css('z-index', zindex+1);
-	}
+	zindex = zindex ? zindex : 99998;
+	this.tray.css('z-index', zindex);
+	this.wrapper.css('z-index', zindex+1);
+	
 	this.show 			=	function() {
 		$('body').css('overflow','hidden').append(_tray, _wrapper);
 		
@@ -76,3 +76,14 @@ var simplayer = function(title,content,buttons,zindex,maxWidth) {
 		}
 	};
 };
+
+function HijackAlert() {
+	window.alert = function(msg, title) {
+		if (!title) { title = 'Message'; }
+		var msgbox = new simplayer(title, msg);
+		msgbox.show();
+	}
+}
+
+
+

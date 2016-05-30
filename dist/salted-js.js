@@ -141,7 +141,28 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		return el.margin(dimension) + el.padding(diemension);
 	};
 	
- })(jQuery);;var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
+ })(jQuery);;/**
+ * @file is_above_viewport.js
+ *
+ * test an element is above the viewport
+ * */
+ 
+/**
+ * - el: The element that you want to test
+ * - offset: the offset the element is away from the top edge of the screen
+ * */
+(function($) {
+
+	$.fn.isAboveViewport = function(el, offset) {
+		offset = offset ? offset : 0;
+		if ($(el).offset().top + $(el).outerHeight() <= $(window).scrollTop() + offset) {
+			return true;
+		}
+		
+		return false;
+	};
+	
+})(jQuery);;var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
 	this.tray			=	$('<div />').attr('id','simplayer-tray');
 	this.title			=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content			=	$('<div />').addClass('simplayer-content').html(content);

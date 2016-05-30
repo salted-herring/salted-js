@@ -75,7 +75,7 @@ function getRandomInt(min, max) {
 
 function getRandomArbitrary(mod) {
 	var rand = Math.ceil(Math.random() * 10);
-    return rand == mod ? rand : rand % mod;
+    return rand == mod ? rand % mod : rand;
 }
 
 function trace(el,line) {

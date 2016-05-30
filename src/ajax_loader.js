@@ -23,6 +23,10 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	this.completeIndicator	=	completeIndicator;
 	this.ajax				=	null;
 	
+	if (_self.loadingIndicator) {
+		_self.loadingIndicator = $(_self.loadingIndicator);
+	}
+	
 	$(this.linkSelector).hide();
 	
 	this.load = function() {
@@ -72,6 +76,9 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 			_self.ajax.abort();
 			_self.ajax = null;
 			_self.ajaxing = false;
+			if (_self.loadingIndicator) {
+				_self.loadingIndicator.remove();
+			}
 		}
 	};
 	

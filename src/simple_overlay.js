@@ -3,7 +3,17 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content				=	$('<div />').addClass('simplayer-content').html(content);
 	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
-	
+	this.afterClose				=	function() {
+										_wrapper.remove();
+										_tray.remove();
+										$('body').removeAttr('style');
+										
+										delete _self.tray;
+										delete _self.title;
+										delete _self.content;
+										delete _self.buttons;
+										delete _self.wrapper;
+									};
 	var _self					=	this,
 		_tray					=	this.tray,
 		_wrapper				=	null,
@@ -13,7 +23,7 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
 										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
 									}},
-		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: afterClose};
+		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: _self.afterClose};
 	
 	
 	if (buttons && typeof(buttons) == 'object' && buttons.length > 0) {
@@ -56,6 +66,7 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 		_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding).css('overflow-y','auto');
 		
 		if (effect) {
+			trace('wtf');
 			_duration			=	effect.duration;
 			_tween				=	effect.from;
 			_tween.onComplete	=	function() {
@@ -65,7 +76,7 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 			_rtween.onComplete	=	_self.afterClose;
 		}
 		
-		TweenMax.to(_wrapper, 0, tween);
+		TweenMax.to(_wrapper, 0, _tween);
 		
 	};
 	
@@ -81,17 +92,7 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 		}
 	};
 	
-	this.afterClose				=	function() {
-										_wrapper.remove();
-										_tray.remove();
-										$('body').removeAttr('style');
-										
-										delete _self.tray;
-										delete _self.title;
-										delete _self.content;
-										delete _self.buttons;
-										delete _self.wrapper;
-									};
+	
 };
 
 function HijackAlert() {
@@ -101,6 +102,3 @@ function HijackAlert() {
 		msgbox.show();
 	};
 }
-
-
-

@@ -1,14 +1,14 @@
-var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
-	this.tray			=	$('<div />').attr('id','simplayer-tray');
-	this.title			=	$('<h2 />').addClass('simplayer-title').html(title);
-	this.content			=	$('<div />').addClass('simplayer-content').html(content);
-	this.buttons			=	$('<div />').addClass('clearfix simplayer-buttons');
+var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
+	this.tray					=	$('<div />').attr('id','simplayer-tray');
+	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
+	this.content				=	$('<div />').addClass('simplayer-content').html(content);
+	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
 	
-	var _self			=	this,
-		_tray			=	this.tray,
-		_wrapper		=	null,
-		_thisButtons 	=	this.buttons,
-		_maxWidth		=	maxWidth;
+	var _self					=	this,
+		_tray					=	this.tray,
+		_wrapper				=	null,
+		_thisButtons 			=	this.buttons,
+		_maxWidth				=	maxWidth;
 	
 	
 	if (buttons && typeof(buttons) == 'object' && buttons.length > 0) {
@@ -27,7 +27,7 @@ var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
 		_thisButtons.append(sbtn);
 	}
 	
-	this.wrapper			=	$('<div />').attr('id', 'simplayer-wrapper').append(this.title, this.content, this.buttons);
+	this.wrapper				=	$('<div />').attr('id', 'simplayer-wrapper').append(this.title, this.content, this.buttons);
 	
 	if (_maxWidth) {
 		this.wrapper.css('max-width', _maxWidth);
@@ -43,21 +43,25 @@ var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
 		$('body').css('overflow','hidden').append(_tray, _wrapper);
 		
 		_wrapper.css('max-height', '90%');
-		var wrapperHeight	=	_wrapper.outerHeight(),
-			wrapperPadding	=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
-			margins			=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
-			nonCntHeight	=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight(),
-			tweenEffect		=	{opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)};
+		var wrapperHeight		=	_wrapper.outerHeight(),
+			wrapperPadding		=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
+			margins				=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
+			nonCntHeight		=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight(),
+			tween				=	{opacity: 0, scale: 0, onComplete:function() {
+										TweenMax.to(_wrapper, 0.25, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
+									}};
 		
 		_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding).css('overflow-y','auto');
 		
 		if (effect) {
-			tweenEffect		=	effect;
+			tween				=	effect.from;
+			tween.onComplete	=	function() {
+										TweenMax.to(_wrapper, 0.25, effect.to);
+									};
 		}
 		
-		TweenMax.to(_wrapper, 0, {opacity: 0, scale: 0, onComplete:function() {
-			TweenMax.to(_wrapper, 0.25, tweenEffect);
-		}});
+		TweenMax.to(_wrapper, 0, tween);
+		
 	};
 	
 	

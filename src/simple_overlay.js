@@ -39,18 +39,24 @@ var simplayer			=	function(title,content,buttons,zindex,maxWidth) {
 	this.tray.css('z-index', zindex);
 	this.wrapper.css('z-index', zindex+1);
 	
-	this.show 			=	function() {
+	this.show 			=	function(effect) {
 		$('body').css('overflow','hidden').append(_tray, _wrapper);
 		
 		_wrapper.css('max-height', '90%');
 		var wrapperHeight	=	_wrapper.outerHeight(),
 			wrapperPadding	=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
 			margins			=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
-			nonCntHeight	=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight();
+			nonCntHeight	=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight(),
+			tweenEffect		=	{opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)};
 		
 		_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding).css('overflow-y','auto');
+		
+		if (effect) {
+			tweenEffect		=	effect;
+		}
+		
 		TweenMax.to(_wrapper, 0, {opacity: 0, scale: 0, onComplete:function() {
-			TweenMax.to(_wrapper, 0.25, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
+			TweenMax.to(_wrapper, 0.25, tweenEffect);
 		}});
 	};
 	

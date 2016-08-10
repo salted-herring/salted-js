@@ -172,7 +172,12 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		_tray					=	this.tray,
 		_wrapper				=	null,
 		_thisButtons 			=	this.buttons,
-		_maxWidth				=	maxWidth;
+		_maxWidth				=	maxWidth,
+		_duration				=	0.25,
+		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
+										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
+									}},
+		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: afterClose};
 	
 	
 	if (buttons && typeof(buttons) == 'object' && buttons.length > 0) {
@@ -210,18 +215,18 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		var wrapperHeight		=	_wrapper.outerHeight(),
 			wrapperPadding		=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
 			margins				=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
-			nonCntHeight		=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight(),
-			tween				=	{opacity: 0, scale: 0, onComplete:function() {
-										TweenMax.to(_wrapper, 0.25, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
-									}};
+			nonCntHeight		=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight();
 		
 		_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding).css('overflow-y','auto');
 		
 		if (effect) {
-			tween				=	effect.from;
-			tween.onComplete	=	function() {
-										TweenMax.to(_wrapper, 0.25, effect.to);
+			_duration			=	effect.duration;
+			_tween				=	effect.from;
+			_tween.onComplete	=	function() {
+										TweenMax.to(_wrapper, _duration, effect.to);
 									};
+			_rtween				=	effect.from;
+			_rtween.onComplete	=	afterClose;
 		}
 		
 		TweenMax.to(_wrapper, 0, tween);
@@ -229,26 +234,28 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	};
 	
 	
-	this.close			=	function() {
-		TweenMax.to(_wrapper, 0.25, {opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete:function() {
-			_wrapper.remove();
-			_tray.remove();
-			$('body').removeAttr('style');
-			
-			delete _self.tray;
-			delete _self.title;
-			delete _self.content;
-			delete _self.buttons;
-			delete _self.wrapper;
-		}});
+	this.close					=	function() {
+		TweenMax.to(_wrapper, _duration, _rtween);
 	};
 	
-	this.btnEvent		=	function(idx, event) {
+	this.btnEvent				=	function(idx, event) {
 		var buttons = this.buttons.find('.simplayer-button');
 		if (idx < buttons.length) {
 			buttons.eq(idx).unbind('click').click(event);
 		}
 	};
+	
+	this.afterClose				=	function() {
+										_wrapper.remove();
+										_tray.remove();
+										$('body').removeAttr('style');
+										
+										delete _self.tray;
+										delete _self.title;
+										delete _self.content;
+										delete _self.buttons;
+										delete _self.wrapper;
+									};
 };
 
 function HijackAlert() {

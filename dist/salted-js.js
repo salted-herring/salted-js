@@ -238,8 +238,9 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 			_rtween.onComplete	=	_self.afterClose;
 		}
 		
-		TweenMax.to(_wrapper, 0, _tween);
+		_tray.unbind('mousedown').mousedown(function() { _self.close(); });
 		
+		TweenMax.to(_wrapper, 0, _tween);
 	};
 	
 	

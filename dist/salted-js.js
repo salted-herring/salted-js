@@ -167,18 +167,7 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content				=	$('<div />').addClass('simplayer-content').html(content);
 	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
-	this.afterClose				=	function() {
-										_wrapper.remove();
-										_tray.remove();
-										$('body').removeAttr('style');
-										
-										delete _self.tray;
-										delete _self.title;
-										delete _self.content;
-										delete _self.buttons;
-										delete _self.wrapper;
-									};
-									
+	
 	var _self					=	this,
 		_tray					=	this.tray,
 		_wrapper				=	null,
@@ -237,7 +226,7 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 										TweenMax.to(_wrapper, _duration, effect.to);
 									};
 			_rtween				=	effect.from;
-			_rtween.onComplete	=	afterClose;
+			_rtween.onComplete	=	_self.afterClose;
 		}
 		
 		TweenMax.to(_wrapper, 0, tween);
@@ -255,6 +244,18 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 			buttons.eq(idx).unbind('click').click(event);
 		}
 	};
+	
+	this.afterClose				=	function() {
+										_wrapper.remove();
+										_tray.remove();
+										$('body').removeAttr('style');
+										
+										delete _self.tray;
+										delete _self.title;
+										delete _self.content;
+										delete _self.buttons;
+										delete _self.wrapper;
+									};
 };
 
 function HijackAlert() {

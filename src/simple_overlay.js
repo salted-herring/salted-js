@@ -3,7 +3,18 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content				=	$('<div />').addClass('simplayer-content').html(content);
 	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
-	
+	this.afterClose				=	function() {
+										_wrapper.remove();
+										_tray.remove();
+										$('body').removeAttr('style');
+										
+										delete _self.tray;
+										delete _self.title;
+										delete _self.content;
+										delete _self.buttons;
+										delete _self.wrapper;
+									};
+									
 	var _self					=	this,
 		_tray					=	this.tray,
 		_wrapper				=	null,
@@ -80,18 +91,6 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
 			buttons.eq(idx).unbind('click').click(event);
 		}
 	};
-	
-	this.afterClose				=	function() {
-										_wrapper.remove();
-										_tray.remove();
-										$('body').removeAttr('style');
-										
-										delete _self.tray;
-										delete _self.title;
-										delete _self.content;
-										delete _self.buttons;
-										delete _self.wrapper;
-									};
 };
 
 function HijackAlert() {

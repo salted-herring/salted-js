@@ -220,7 +220,6 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	
 	this.show 			=	function(effect) {
 		$('body').css('overflow','hidden').append(_tray, _wrapper);
-		
 		_wrapper.css('max-height', '90%');
 		var wrapperHeight		=	_wrapper.outerHeight(),
 			wrapperPadding		=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
@@ -230,13 +229,12 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 		_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding).css('overflow-y','auto');
 		
 		if (effect) {
-			trace('wtf');
 			_duration			=	effect.duration;
-			_tween				=	effect.from;
+			_tween				=	clone(effect.from);
 			_tween.onComplete	=	function() {
-										TweenMax.to(_wrapper, _duration, effect.to);
+										TweenMax.to(_wrapper, _duration, clone(effect.to));
 									};
-			_rtween				=	effect.from;
+			_rtween				=	clone(effect.from);
 			_rtween.onComplete	=	_self.afterClose;
 		}
 		
@@ -258,7 +256,6 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	
 	
 };
-
 function HijackAlert() {
 	window.alert = function(msg, title) {
 		if (!title) { title = 'Message'; }
@@ -390,4 +387,13 @@ function getOrientation(file, callback) {
     return callback(-1);
   };
   reader.readAsArrayBuffer(file.slice(0, 64 * 1024));
+}
+
+function clone(obj) {
+    if (null === obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
 }

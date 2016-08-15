@@ -36,6 +36,26 @@ Number.prototype.toFloat = function toFloat() {
 	return this;
 };
 
+Array.prototype.shuffle = function shuffle() {
+	var array = this;
+	var currentIndex = array.length, temporaryValue, randomIndex;
+	
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+		
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+	
+	return array;
+};
+
 
 /*
  * anonymous functions
@@ -76,6 +96,25 @@ function getRandomInt(min, max) {
 function getRandomArbitrary(mod) {
 	var rand = Math.ceil(Math.random() * 10);
     return rand == mod ? rand % mod : rand;
+}
+
+function shuffle(array) {
+	var currentIndex = array.length, temporaryValue, randomIndex;
+	
+	// While there remain elements to shuffle...
+	while (0 !== currentIndex) {
+		
+		// Pick a remaining element...
+		randomIndex = Math.floor(Math.random() * currentIndex);
+		currentIndex -= 1;
+		
+		// And swap it with the current element.
+		temporaryValue = array[currentIndex];
+		array[currentIndex] = array[randomIndex];
+		array[randomIndex] = temporaryValue;
+	}
+	
+	return array;
 }
 
 function trace(el,line) {

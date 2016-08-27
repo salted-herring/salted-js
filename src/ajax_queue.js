@@ -1,3 +1,4 @@
+var _processing_ajaq = false;
 var ajaq = function() {
 	this.queue = [];
 	var self = this;
@@ -8,10 +9,15 @@ var ajaq = function() {
 	};
 	
 	this.emit = function() {
-		if (self.queue.length > 0) {
-			var request = self.queue[0];
-			self.queue.shift();
-			$.ajax(request).done(request.onDone ? request.onDone : null).fail(request.onFail ? request.onFail : null).then(self.emit);
+		if (!_processing_ajaq) {
+			if (self.queue.length > 0) {
+				_processing_ajaq = true;
+				var request = self.queue[0];
+				self.queue.shift();
+				$.ajax(request).done(request.onDone ? request.onDone : null).fail(request.onFail ? request.onFail : null).then(self.emit);
+			} else {
+				_processing_ajaq = false;
+			}
 		}
 	};
 	

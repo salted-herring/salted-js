@@ -3,8 +3,11 @@ var ajaq = function() {
 	this.queue = [];
 	var self = this;
 	
-	this.add = function(ajaxRequest) {
+	this.add = function(ajaxRequest, immediateEmit) {
 		self.queue.push(ajaxRequest);
+		if (immediateEmit) {
+			self.emit();
+		}
 		return self;
 	};
 	

@@ -9,15 +9,15 @@ var ajaq = function() {
 	};
 	
 	this.emit = function() {
-		if (!_processing_ajaq) {
-			if (self.queue.length > 0) {
+		if (self.queue.length > 0) {
+			if (!_processing_ajaq) {
 				_processing_ajaq = true;
 				var request = self.queue[0];
 				self.queue.shift();
 				$.ajax(request).done(request.onDone ? request.onDone : null).fail(request.onFail ? request.onFail : null).then(self.emit);
-			} else {
-				_processing_ajaq = false;
 			}
+		} else {
+			_processing_ajaq = false;
 		}
 	};
 	

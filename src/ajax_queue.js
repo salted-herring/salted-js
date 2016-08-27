@@ -4,6 +4,7 @@ var ajaq = function() {
 	
 	this.add = function(ajaxRequest) {
 		self.queue.push(ajaxRequest);
+		return self;
 	};
 	
 	this.emit = function() {

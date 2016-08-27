@@ -107,6 +107,7 @@ var ajaxLoader = function(elementSelector, linkSelector, destination, preprocess
 	
 	this.add = function(ajaxRequest) {
 		self.queue.push(ajaxRequest);
+		return self;
 	};
 	
 	this.emit = function() {

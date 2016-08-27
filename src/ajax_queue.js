@@ -17,7 +17,7 @@ var ajaq = function() {
 				_processing_ajaq = true;
 				var request = self.queue[0];
 				self.queue.shift();
-				$.ajax(request).done(request.onDone ? request.onDone : null).fail(request.onFail ? request.onFail : null).then(self.emit);
+				$.ajax(request).done(request.onDone ? request.onDone : null).fail(request.onFail ? request.onFail : null).then(function() { _processing_ajaq = false; self.emit();});
 			}
 		} else {
 			_processing_ajaq = false;

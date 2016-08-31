@@ -49,7 +49,7 @@ Number.prototype.DoubleDigit = function() {
 };
 
 Date.prototype.now = function() {
-	return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
+	return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
 };
 
 Array.prototype.shuffle = function shuffle() {

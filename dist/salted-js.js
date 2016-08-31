@@ -359,7 +359,7 @@ Number.prototype.DoubleDigit = function() {
 };
 
 Date.prototype.now = function() {
-	return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate() + ' ' +  d.getHours().DoubleDigit() + ':' + d.getMinutes().DoubleDigit() + ':' + d.getSeconds().DoubleDigit();
+	return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
 };
 
 Array.prototype.shuffle = function shuffle() {

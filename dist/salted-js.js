@@ -346,6 +346,15 @@ Number.prototype.toFloat = function toFloat() {
 	return this;
 };
 
+Date.prototype.now = function() {
+	var str		=	this.toJSON(),
+		segs	=	str.split('.');
+	
+	str			=	segs[0].replace('T', ' ');
+	
+	return str;
+};
+
 Array.prototype.shuffle = function shuffle() {
 	var array = this;
 	var currentIndex = array.length, temporaryValue, randomIndex;

@@ -36,13 +36,20 @@ Number.prototype.toFloat = function toFloat() {
 	return this;
 };
 
+String.prototype.DoubleDigit = function() {
+	var n = this.toFloat();
+	
+	return n < 10 ? ('0' + this) : this;
+};
+
+Number.prototype.DoubleDigit = function() {
+	var s = this.toString();
+	
+	return this < 10 ? ('0' + s) : s;
+};
+
 Date.prototype.now = function() {
-	var str		=	this.toJSON(),
-		segs	=	str.split('.');
-	
-	str			=	segs[0].replace('T', ' ');
-	
-	return str;
+	return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate() + ' ' +  d.getHours().DoubleDigit() + ':' + d.getMinutes().DoubleDigit() + ':' + d.getSeconds().DoubleDigit();
 };
 
 Array.prototype.shuffle = function shuffle() {

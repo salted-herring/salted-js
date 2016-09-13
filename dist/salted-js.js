@@ -228,7 +228,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		_wrapper				=	null,
 		_thisButtons 			=	this.buttons,
 		_maxWidth				=	maxWidth,
-		_touchClose				=	touchClose ? _touchClose : true,
+		_touchClose				=	touchClose === false ? false : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
 										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});

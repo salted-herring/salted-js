@@ -207,7 +207,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		return false;
 	};
 	
-})(jQuery);;var simplayer					=	function(title,content,buttons,zindex,maxWidth) {
+})(jQuery);;var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	this.tray					=	$('<div />').attr('id','simplayer-tray');
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content				=	$('<div />').addClass('simplayer-content').html(content);
@@ -228,6 +228,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		_wrapper				=	null,
 		_thisButtons 			=	this.buttons,
 		_maxWidth				=	maxWidth,
+		_touchClose				=	touchClose ? _touchClose : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
 										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
@@ -283,7 +284,9 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 			_rtween.onComplete	=	_self.afterClose;
 		}
 		
-		_tray.unbind('mousedown').mousedown(function() { _self.close(); });
+		if (_touchClose) {
+			_tray.unbind('mousedown').mousedown(function() { _self.close(); });
+		}
 		
 		TweenMax.to(_wrapper, 0, _tween);
 	};

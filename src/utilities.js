@@ -15,13 +15,13 @@ String.prototype.kmark = function kmark() {
 
 String.prototype.toDollar = function toDollar(digits) {
 	var n = this.toFloat();
-	digits = digits === null ? 2 : digits;
+	digits = (digits === null || digit === undefined) ? 2 : digits;
 	return '$' + n.toFixed(digits).kmark();
 };
 
 Number.prototype.toDollar = function toDollar(digits) {
 	var n = this;
-	digits = digits === null ? 2 : digits;
+	digits = (digits === null || digit === undefined) ? 2 : digits;
 	return '$' + n.toFixed(digits).kmark();
 };
 

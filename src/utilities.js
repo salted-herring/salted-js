@@ -15,6 +15,7 @@ String.prototype.kmark = function kmark() {
 
 String.prototype.toDollar = function toDollar(digits) {
 	var n = this.toFloat();
+	n = Math.round(n*100) / 100;
 	digits = (digits === null || digits === undefined) ? 2 : digits;
 	return '$' + n.toFixed(digits).kmark();
 };

@@ -2,16 +2,6 @@ var gmap = function(api_key, map_id, locs) {
 	var self			=	this,
 		map				=	null,
 		center_point	=	null;
-	if (!window.google) {
-		$.when(
-			$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key ),
-			$.Deferred(function( deferred ){
-				$( deferred.resolve );
-			})
-		).done(self.init);
-	} else {
-		this.init();
-	}
 	
 	this.init = function() {
 		if (locs && locs.length > 0) {
@@ -28,6 +18,17 @@ var gmap = function(api_key, map_id, locs) {
 			}
 		}
 	};
+	
+	if (!window.google) {
+		$.when(
+			$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key ),
+			$.Deferred(function( deferred ){
+				$( deferred.resolve );
+			})
+		).done(self.init);
+	} else {
+		self.init();
+	}
 	
 	return this;
 };

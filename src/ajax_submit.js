@@ -7,7 +7,7 @@
      }
  * */
 (function($) {
-	$.fn.ajaxSubmit = function(callbacks) {
+	$.fn.ajaxSubmit = function(cbf) {
         var self            =   $(this),
             endpoint        =   $(this).attr('action'),
             method          =   $(this).attr('method'),
@@ -16,7 +16,7 @@
                                     success: function(response) {},
                                     fail: function(response) {},
                                     done: function(response) {}
-                                }, callbacks);
+                                }, cbf);
 
         $(this).submit(function(e){
             e.preventDefault();

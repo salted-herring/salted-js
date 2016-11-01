@@ -1,6 +1,8 @@
 (function($) {
 	window.ajaxRouteInited = false;
+	window.ajaxRouteCache = true;
 	$.fn.ajaxRoute = function(content_scheme, data_object, cbf) {
+		
 		if (!window.ajaxRouteInited) {
 			console.error('AjaxRoute is not initialised!\nPlease initAjaxRoute("#element-id"); first!');
 			return false;
@@ -14,10 +16,8 @@
 			data			=	data_object,
 			onStart			=	cbf.onStart ? cbf.onStart : function() {},
 			onEnd			=	cbf.onEnd ? cbf.onEnd : function() {},
-			state_data		=	{
-									container: container.selector,
-									content: ''
-								};
+			state_data		=	{ container: container.selector };
+			
 		if (url) {
 			$(this).unbind('click').click(function(e) {
 				e.preventDefault();
@@ -25,7 +25,11 @@
 				onStart();
 				document.title = title;
 				$.get(url, data, function(response) {
-					state_data.content = response;
+					if (window.ajaxRouteCache) {
+						state_data.content = response;
+					} else {
+						state_data.url = url;
+					}
 					if (window.history && history.pushState) {
 						history.pushState(state_data, title, url);
 					}
@@ -36,18 +40,32 @@
 					}
 					onEnd();
 				});
-            });			
+            });
 		}
 	};
 	
-	window.initAjaxRoute = function(selector) {
+	window.initAjaxRoute = function(selector, cache) {
 		if (window.history && history.pushState) {
-			var defaults = { container: selector, content: $(selector).html()};
-			trace(defaults);
+			window.ajaxRouteCache = cache;
+			var defaults = { container: selector };
+			if (window.ajaxRouteCache) {
+				defaults.content = $(selector).html();
+			} else {
+				defaults.url = location.pathname;
+			}
 			history.replaceState(defaults, document.title, window.location.pathname);
+			
 			window.addEventListener('popstate', function(e) {
-				if (e.state && e.state.container && e.state.content) {
-					$(e.state.container).html(e.state.content);
+				if (e.state && e.state.container){
+					if (e.state.content) {
+						$(e.state.container).html(e.state.content);
+					}
+					
+					if (e.state.url) {
+						$.get(e.state.url, function(data) {
+							$(e.state.container).html(data);
+						});
+					}
 				}
 			});
 		}

@@ -237,14 +237,11 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
                 data: formData,
                 cache: false,
                 contentType: false,
-                processData: false,
-                success: callbacks.success,
-                error: callbacks.fail,
-                done: function() {
-					lockdown = false;
-					callbacks.done();
-				}
-            });
+                processData: false
+            }).done(callbacks.success).fail(callbacks.fail).always(function(response) {
+				lockdown = false;
+				callback.done(response);
+			});
         });
 	};
  })(jQuery);

@@ -240,7 +240,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
                 processData: false
             }).done(callbacks.success).fail(callbacks.fail).always(function(response) {
 				lockdown = false;
-				callback.done(response);
+				callbacks.done(response);
 			});
         });
 	};

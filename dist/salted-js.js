@@ -214,6 +214,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
         var self            =   $(this),
             endpoint        =   $(this).attr('action'),
             method          =   $(this).attr('method'),
+			lockdown		=	false,
             callbacks       =   $.extend({
                                     onstart: function() {},
                                     success: function(response) {},
@@ -223,6 +224,11 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 
         $(this).submit(function(e){
             e.preventDefault();
+			if (lockdown) {
+				return false;
+			}
+			
+			lockdown = true;
             var formData    =   new FormData($(this)[0]);
             callbacks.onstart();
             $.ajax({
@@ -234,7 +240,10 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
                 processData: false,
                 success: callbacks.success,
                 error: callbacks.fail,
-                done: callbacks.done
+                done: function() {
+					lockdown = false;
+					callbacks.done();
+				}
             });
         });
 	};

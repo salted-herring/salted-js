@@ -44,7 +44,7 @@
 		}
 	};
 	
-	window.initAjaxRoute = function(selector, cache) {
+	window.initAjaxRoute = function(selector, cache, callback) {
 		if (window.history && history.pushState) {
 			window.ajaxRouteCache = cache;
 			var defaults = { container: selector };
@@ -53,6 +53,11 @@
 			} else {
 				defaults.url = location.pathname;
 			}
+			
+			if (callback) {
+				defaults.callback = callback.toString();
+			}
+			
 			history.replaceState(defaults, document.title, window.location.pathname);
 			
 			window.addEventListener('popstate', function(e) {
@@ -66,6 +71,8 @@
 							data = $(data);
 							data = data.find(e.state.container).length == 1 ? data.find(e.state.container).html() : data;
 							$(e.state.container).html(data);
+							
+							if (e.state.callback) eval(e.state.callback);
 						});
 					}
 				}

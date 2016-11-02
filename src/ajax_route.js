@@ -64,7 +64,7 @@
 					if (e.state.url) {
 						$.get(e.state.url, function(data) {
 							data = $(data);
-							data = data.find(e.state.selector).length == 1 ? data.find(e.state.selector).html() : data;
+							data = data.find(e.state.container).length == 1 ? data.find(e.state.container).html() : data;
 							$(e.state.container).html(data);
 						});
 					}

@@ -63,6 +63,7 @@
 					
 					if (e.state.url) {
 						$.get(e.state.url, function(data) {
+							data = data.find(selector).length == 1 ? data.find(selector).html() : data;
 							$(e.state.container).html(data);
 						});
 					}

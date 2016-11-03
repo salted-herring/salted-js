@@ -74,11 +74,13 @@
 							if (e.state.container.indexOf(',') >= 0) {
 								var containers = e.state.container.split(',');
 								containers.forEach(function(selector) {
+									selector = $.trim(selector);
 									if (data.find(selector).length > 0) {
-										data = data.find(selector).html();
+										var html = data.find(selector).html();
+										$(selector).html(html);
+									} else {
+										trace(selector + ' not found');
 									}
-									
-									$(e.state.container).html(data);
 								});
 							} else {
 								data = data.find(e.state.container).length > 0 ? data.find(e.state.container).html() : data;

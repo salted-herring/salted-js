@@ -1,6 +1,7 @@
 (function($) {
 	window.ajaxRouteInited = false;
 	window.ajaxRouteCache = true;
+	window.ajaxRouteCallbacks = [];
 	$.fn.ajaxRoute = function(content_scheme, data_object, cbf) {
 		
 		if (!window.ajaxRouteInited) {
@@ -44,7 +45,7 @@
 		}
 	};
 	
-	window.initAjaxRoute = function(selector, cache, callback) {
+	window.initAjaxRoute = function(selector, cache) {
 		if (window.history && history.pushState) {
 			window.ajaxRouteCache = cache;
 			var defaults = { container: selector };
@@ -53,11 +54,7 @@
 			} else {
 				defaults.url = location.pathname;
 			}
-			
-			if (callback) {
-				defaults.callback = callback.toString();
-			}
-			
+						
 			history.replaceState(defaults, document.title, window.location.pathname);
 			
 			window.addEventListener('popstate', function(e) {
@@ -71,8 +68,10 @@
 							data = $(data);
 							data = data.find(e.state.container).length == 1 ? data.find(e.state.container).html() : data;
 							$(e.state.container).html(data);
-							
-							if (e.state.callback) eval(e.state.callback);
+							if (window.ajaxRouteCallbacks[e.state.url] && typeof(window.ajaxRouteCallbacks[e.state.url]) == 'function') {
+								var cbf = window.ajaxRouteCallbacks[e.state.url];
+								cbf();
+							}
 						});
 					}
 				}

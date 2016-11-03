@@ -195,6 +195,11 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 	
 	window.initAjaxRoute = function(selector, cache) {
 		if (window.history && history.pushState) {
+			
+			if (typeof(selector) == 'object') {
+				selector = selector.toString();
+			}
+			
 			window.ajaxRouteCache = cache;
 			var defaults = { container: selector };
 			if (window.ajaxRouteCache) {
@@ -214,8 +219,20 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 					if (e.state.url) {
 						$.get(e.state.url, function(data) {
 							data = $(data);
-							data = data.find(e.state.container).length == 1 ? data.find(e.state.container).html() : data;
-							$(e.state.container).html(data);
+							if (e.state.container.indexOf(',') >= 0) {
+								var containers = e.state.container.split(',');
+								containers.forEach(function(selector) {
+									if (data.find(selector).length > 0) {
+										data = data.find(selector).html();
+									}
+									
+									$(e.state.container).html(data);
+								});
+							} else {
+								data = data.find(e.state.container).length > 0 ? data.find(e.state.container).html() : data;
+								$(e.state.container).html(data);
+							}
+							
 							if (window.ajaxRouteCallbacks[e.state.url] && typeof(window.ajaxRouteCallbacks[e.state.url]) == 'function') {
 								var cbf = window.ajaxRouteCallbacks[e.state.url];
 								cbf();

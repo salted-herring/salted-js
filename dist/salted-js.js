@@ -150,6 +150,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 	window.ajaxRouteInited = false;
 	window.ajaxRouteCache = true;
 	window.ajaxRouteCallbacks = [];
+	window.ajaxRouteErrorHandlers = [];
 	$.fn.ajaxRoute = function(content_scheme, data_object, cbf) {
 
 		if (!window.ajaxRouteInited) {
@@ -217,32 +218,44 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 					}
 
 					if (e.state.url) {
-						$.get(e.state.url, function(data) {
 
-							var html = $($.parseHTML(data));
+					   $.ajax({
+						   url: e.state.url,
+						   type: 'get',
+						   cache: false,
+						   contentType: false,
+						   processData: false
+					   }).done(function(data) {
+						   var html = $($.parseHTML(data));
 
-							if (e.state.container.indexOf(',') >= 0) {
-								var containers = e.state.container.split(',');
-								containers.forEach(function(selector) {
-									selector = $.trim(selector);
-									//$($.parseHTML(response)).filter("#success");
-									if (html.filter(selector).length > 0 || html.find(selector).length > 0) {
-										var htmlstr = html.filter(selector).length > 0 ? html.filter(selector).html() : html.find(selector);
-										$(selector).html(htmlstr);
-									} else {
-										trace(selector + ' not found');
-									}
-								});
-							} else {
-								data = html.filter(e.state.container).length > 0 ? html.filter(e.state.container).html() : ( html.find(e.state.container).length > 0 ? html.find(e.state.container).html() : data );
-								$(e.state.container).html(data);
-							}
+						   if (e.state.container.indexOf(',') >= 0) {
+							   var containers = e.state.container.split(',');
+							   containers.forEach(function(selector) {
+								   selector = $.trim(selector);
+								   //$($.parseHTML(response)).filter("#success");
+								   if (html.filter(selector).length > 0 || html.find(selector).length > 0) {
+									   var htmlstr = html.filter(selector).length > 0 ? html.filter(selector).html() : html.find(selector);
+									   $(selector).html(htmlstr);
+								   } else {
+									   trace(selector + ' not found');
+								   }
+							   });
+						   } else {
+							   data = html.filter(e.state.container).length > 0 ? html.filter(e.state.container).html() : ( html.find(e.state.container).length > 0 ? html.find(e.state.container).html() : data );
+							   $(e.state.container).html(data);
+						   }
 
-							if (window.ajaxRouteCallbacks[e.state.url] && typeof(window.ajaxRouteCallbacks[e.state.url]) == 'function') {
-								var cbf = window.ajaxRouteCallbacks[e.state.url];
-								cbf();
-							}
-						});
+						   if (window.ajaxRouteCallbacks[e.state.url] && typeof(window.ajaxRouteCallbacks[e.state.url]) == 'function') {
+							   var cbf = window.ajaxRouteCallbacks[e.state.url];
+							   cbf();
+						   }
+					   }).fail(function(response) {
+						   if (window.ajaxRouteErrorHandlers[response.status] && typeof(window.ajaxRouteErrorHandlers[response.status]) == 'function') {
+							   window.ajaxRouteErrorHandlers[response.status]();
+						   } else {							  
+							   location.reload();
+						   }
+					   });
 					}
 				}
 			});

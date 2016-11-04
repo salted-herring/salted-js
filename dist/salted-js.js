@@ -151,6 +151,11 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 	window.ajaxRouteCache = true;
 	window.ajaxRouteCallbacks = [];
 	window.ajaxRouteErrorHandlers = [];
+	window.popstateTransition = {
+		onStart: function() {},
+		onEnd: function() {}
+	};
+
 	$.fn.ajaxRoute = function(content_scheme, data_object, cbf) {
 
 		if (!window.ajaxRouteInited) {
@@ -218,14 +223,14 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 					}
 
 					if (e.state.url) {
-
-					   $.ajax({
-						   url: e.state.url,
-						   type: 'get',
-						   cache: false,
-						   contentType: false,
-						   processData: false
-					   }).done(function(data) {
+						window.popstateTransition.onStart();
+						$.ajax({
+							url: e.state.url,
+							type: 'get',
+							cache: false,
+							contentType: false,
+							processData: false
+					    }).done(function(data) {
 						   var html = $($.parseHTML(data));
 
 						   if (e.state.container.indexOf(',') >= 0) {
@@ -249,20 +254,21 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 							   var cbf = window.ajaxRouteCallbacks[e.state.url];
 							   cbf();
 						   }
-					   }).fail(function(response) {
+						}).fail(function(response) {
 						   if (window.ajaxRouteErrorHandlers[response.status] && typeof(window.ajaxRouteErrorHandlers[response.status]) == 'function') {
 							   window.ajaxRouteErrorHandlers[response.status]();
-						   } else {							  
+						   } else {
 							   location.reload();
 						   }
-					   });
+					   }).always(window.popstateTransition.onEnd);
 					}
 				}
 			});
 		}
 		window.ajaxRouteInited = true;
 	};
- })(jQuery);;/**
+ })(jQuery);
+;/**
  * - callbacks: null | {
         onstart: function | null,
         sucess: function | null,

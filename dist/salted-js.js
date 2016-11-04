@@ -227,7 +227,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 						$.ajax({
 							url: e.state.url,
 							type: 'get',
-							cache: false,
+							cache: true,
 							contentType: false,
 							processData: false
 					    }).done(function(data) {

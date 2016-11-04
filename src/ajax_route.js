@@ -79,7 +79,7 @@
 						$.ajax({
 							url: e.state.url,
 							type: 'get',
-							cache: false,
+							cache: true,
 							contentType: false,
 							processData: false
 					    }).done(function(data) {

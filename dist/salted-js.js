@@ -537,10 +537,14 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		}
 		
 		TweenMax.to(_wrapper, 0, _tween);
+		TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
+			TweenMax.to(_tray, _duration, {opacity: 1});
+		}});
 	};
 	
 	
 	this.close					=	function() {
+		TweenMax.to(_tray, _duration, {opacity: 0});
 		TweenMax.to(_wrapper, _duration, _rtween);
 	};
 	

@@ -455,11 +455,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		return false;
 	};
 	
-})(jQuery);;window.simplayerEaseEffect		=	{
-										in: Back.easeOut.config(1.7),
-										out: Back.easeIn.config(1.7)
-									};
-var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
+})(jQuery);;var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	this.tray					=	$('<div />').attr('id','simplayer-tray');
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
 	this.content					=	$('<div />').addClass('simplayer-content').html(content);
@@ -483,9 +479,9 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		_touchClose				=	touchClose === false ? false : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
-										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: window.simplayerEaseEffect.in});
+										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
 									}},
-		_rtween					=	{opacity: 0, scale: 0, ease: window.simplayerEaseEffect.out, onComplete: _self.afterClose};
+		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: _self.afterClose};
 	
 	
 	if (buttons && typeof(buttons) == 'object' && buttons.length > 0) {
@@ -557,11 +553,11 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	
 	
 };
-function HijackAlert() {
+function HijackAlert(tweenObjects) {
 	window.alert = function(msg, title) {
 		if (!title) { title = 'Message'; }
 		var msgbox = new simplayer(title, msg);
-		msgbox.show();
+		msgbox.show(tweenObjects);
 	};
 };/*
  * Prototypes

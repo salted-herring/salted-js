@@ -1,8 +1,12 @@
+window.simplayerEaseEffect		=	{
+										in: Back.easeOut.config(1.7),
+										out: Back.easeIn.config(1.7)
+									};
 var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	this.tray					=	$('<div />').attr('id','simplayer-tray');
 	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
-	this.content				=	$('<div />').addClass('simplayer-content').html(content);
-	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
+	this.content					=	$('<div />').addClass('simplayer-content').html(content);
+	this.buttons					=	$('<div />').addClass('clearfix simplayer-buttons');
 	this.afterClose				=	function() {
 										_wrapper.remove();
 										_tray.remove();
@@ -22,9 +26,9 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		_touchClose				=	touchClose === false ? false : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
-										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
+										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: window.simplayerEaseEffect.in});
 									}},
-		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: _self.afterClose};
+		_rtween					=	{opacity: 0, scale: 0, ease: window.simplayerEaseEffect.out, onComplete: _self.afterClose};
 	
 	
 	if (buttons && typeof(buttons) == 'object' && buttons.length > 0) {

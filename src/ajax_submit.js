@@ -13,6 +13,7 @@
             method          =   $(this).attr('method'),
 			lockdown		=	false,
             callbacks       =   $.extend({
+									validator: function() { return true; },
                                     onstart: function() {},
                                     success: function(response) {},
                                     fail: function(response) {},
@@ -21,10 +22,16 @@
 
         $(this).submit(function(e){
             e.preventDefault();
+			e.stopPropagation();
+			
+			if (!callbacks.validator()) {
+				return false;
+			}
+
 			if (lockdown) {
 				return false;
 			}
-			
+
 			lockdown = true;
             var formData    =   new FormData($(this)[0]);
             callbacks.onstart();

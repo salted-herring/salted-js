@@ -34,18 +34,18 @@ String.prototype.toFloat = function toFloat() {
 };
 
 Number.prototype.toFloat = function toFloat() {
-	return this;
+	return this.valueOf();
 };
 
 String.prototype.DoubleDigit = function() {
 	var n = this.toFloat();
-	
+
 	return n < 10 ? ('0' + this) : this;
 };
 
 Number.prototype.DoubleDigit = function() {
 	var s = this.toString();
-	
+
 	return this < 10 ? ('0' + s) : s;
 };
 
@@ -56,20 +56,20 @@ Date.prototype.now = function() {
 Array.prototype.shuffle = function shuffle() {
 	var array = this;
 	var currentIndex = array.length, temporaryValue, randomIndex;
-	
+
 	// While there remain elements to shuffle...
 	while (0 !== currentIndex) {
-		
+
 		// Pick a remaining element...
 		randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex -= 1;
-		
+
 		// And swap it with the current element.
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
 	}
-	
+
 	return array;
 };
 
@@ -92,7 +92,7 @@ var QueryString = function () {
     	} else {
       		query_string[pair[0]].push(pair[1]);
     	}
-  	} 
+  	}
     return query_string;
 } (); //usage: e.g. URL: http://wildeyes.local?hello=123, run QueryString.hello will output '123'
 
@@ -117,20 +117,20 @@ function getRandomArbitrary(mod) {
 
 function shuffle(array) {
 	var currentIndex = array.length, temporaryValue, randomIndex;
-	
+
 	// While there remain elements to shuffle...
 	while (0 !== currentIndex) {
-		
+
 		// Pick a remaining element...
 		randomIndex = Math.floor(Math.random() * currentIndex);
 		currentIndex -= 1;
-		
+
 		// And swap it with the current element.
 		temporaryValue = array[currentIndex];
 		array[currentIndex] = array[randomIndex];
 		array[randomIndex] = temporaryValue;
 	}
-	
+
 	return array;
 }
 
@@ -149,7 +149,7 @@ function isAboveViewport(el, offset) {
 	if ($(el).offset().top + $(el).outerHeight() <= $(window).scrollTop() + offset) {
 		return true;
 	}
-	
+
 	return false;
 }
 

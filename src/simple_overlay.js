@@ -45,16 +45,18 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 			_thisButtons.append(sbtn);
 		});
 	}else{
-		if (buttons !== false) {
-			var sbtn = $('<button />').addClass('simplayer-button button').html('OK');
-			sbtn.click(function(e) {
-	            _self.close();
-	        });
-			_thisButtons.append(sbtn);
-		}
+		var sbtn = $('<button />').addClass('simplayer-button button').html('OK');
+		sbtn.click(function(e) {
+            _self.close();
+        });
+		_thisButtons.append(sbtn);
 	}
 
-	this.wrapper				=	$('<div />').attr('id', 'simplayer-wrapper').append(this.title, this.content, (buttons !== false) ? this.buttons : null);
+	this.wrapper				=	$('<div />').attr('id', 'simplayer-wrapper').append(this.title, this.content, this.buttons);
+
+	if (buttons === false) {
+		this.buttons.hide();
+	}
 
 	if (_maxWidth) {
 		this.wrapper.css('max-width', _maxWidth);

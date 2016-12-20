@@ -508,8 +508,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 	
 })(jQuery);;var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	this.tray					=	$('<div />').attr('id','simplayer-tray');
-	this.title					=	$('<h2 />').addClass('simplayer-title').html(title);
-	this.content				=	$('<div />').addClass('simplayer-content').html(content);
+	this.title					=	$('<h2 />').addClass('simplayer-title');
+	this.content				=	$('<div />').addClass('simplayer-content');
 	this.buttons				=	$('<div />').addClass('clearfix simplayer-buttons');
 	this.afterClose				=	function() {
 										_wrapper.remove();
@@ -522,6 +522,15 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 										delete _self.buttons;
 										delete _self.wrapper;
 									};
+
+	if (title) {
+		this.title.html(title);
+	}
+
+	if (content) {
+		this.content.html(content);
+	}
+
 	var _self					=	this,
 		_tray					=	this.tray,
 		_wrapper				=	null,

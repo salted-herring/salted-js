@@ -115,8 +115,9 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		}
 	};
 
-
+	return this;
 };
+
 function HijackAlert(tweenObjects) {
 	window.alert = function(msg, title) {
 		if (!title) { title = 'Message'; }

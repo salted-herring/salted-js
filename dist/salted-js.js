@@ -603,8 +603,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 	};
 
 	this.update					=	function(title, content, callback) {
-		self.title.html(title);
-		self.content.html(content);
+		_self.title.html(title);
+		_self.content.html(content);
 		if (callback) {
 			callback();
 		}

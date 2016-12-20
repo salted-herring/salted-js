@@ -95,8 +95,8 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 	};
 
 	this.update					=	function(title, content, callback) {
-		self.title.html(title);
-		self.content.html(content);
+		_self.title.html(title);
+		_self.content.html(content);
 		if (callback) {
 			callback();
 		}

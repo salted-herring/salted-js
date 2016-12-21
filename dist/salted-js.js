@@ -539,7 +539,9 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 		_touchClose				=	touchClose === false ? false : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
-										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
+										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7), onComplete:function(){
+											_self.wrapper.css('transform', '');
+										}});
 									}},
 		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: _self.afterClose};
 
@@ -599,7 +601,7 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 		if (_touchClose) {
 			_tray.unbind('mousedown').mousedown(function() { _self.close(); });
 		}
-		
+
 		TweenMax.to(_wrapper, 0, _tween);
 		TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
 			TweenMax.to(_tray, _duration, {opacity: 1});

@@ -600,10 +600,13 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 			_tray.unbind('mousedown').mousedown(function() { _self.close(); });
 		}
 
-		TweenMax.to(_wrapper, 0, _tween);
-		TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
-			TweenMax.to(_tray, _duration, {opacity: 1});
-		}});
+		setTimeout(function()
+		{
+			TweenMax.to(_wrapper, 0, _tween);
+			TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
+				TweenMax.to(_tray, _duration, {opacity: 1});
+			}});
+		}, 1);
 	};
 
 	this.update					=	function(title, content, callback) {

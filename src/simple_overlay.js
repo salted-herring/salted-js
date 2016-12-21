@@ -91,14 +91,11 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		if (_touchClose) {
 			_tray.unbind('mousedown').mousedown(function() { _self.close(); });
 		}
-
-		setTimeout(function()
-		{
-			TweenMax.to(_wrapper, 0, _tween);
-			TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
-				TweenMax.to(_tray, _duration, {opacity: 1});
-			}});
-		}, 1);
+		
+		TweenMax.to(_wrapper, 0, _tween);
+		TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
+			TweenMax.to(_tray, _duration, {opacity: 1});
+		}});
 	};
 
 	this.update					=	function(title, content, callback) {

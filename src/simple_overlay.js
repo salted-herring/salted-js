@@ -106,6 +106,17 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		}
 	};
 
+	this.addClass				=	function(classname) {
+		this.wrapper.addClass(classname);
+	};
+
+	// this.updateScrollableHeight	=	function() {
+	// 	var wrapperHeight		=	_wrapper.outerHeight(),
+	// 		wrapperPadding		=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
+	// 		margins				=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
+	// 		nonCntHeight		=	_wrapper.find('.simplayer-title').outerHeight() + _wrapper.find('.simplayer-buttons').outerHeight();
+	// 	_wrapper.find('.simplayer-content').css('max-height', wrapperHeight - nonCntHeight - margins - wrapperPadding);
+	// };
 
 	this.close					=	function() {
 		TweenMax.to(_tray, _duration, {opacity: 0});

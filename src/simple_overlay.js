@@ -31,9 +31,7 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 		_touchClose				=	touchClose === false ? false : true,
 		_duration				=	0.25,
 		_tween					=	{opacity: 0, scale: 0, onComplete:function() {
-										TweenMax.to(_wrapper, _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7), onComplete:function(){
-											_self.wrapper.css('transform', '');
-										}});
+										TweenMax.to(_wrapper.css('visibility', 'visible'), _duration, {opacity: 1, scale: 1, ease: Back.easeOut.config(1.7)});
 									}},
 		_rtween					=	{opacity: 0, scale: 0, ease: Back.easeIn.config(1.7), onComplete: _self.afterClose};
 
@@ -72,7 +70,10 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 
 	this.show 			=	function(effect) {
 		$('body').css('overflow','hidden').append(_tray, _wrapper);
-		_wrapper.css('max-height', '90%');
+		_wrapper.css({
+			'max-height': '90%',
+			'visibility': 'hidden'
+		});
 		var wrapperHeight		=	_wrapper.outerHeight(),
 			wrapperPadding		=	_wrapper.css('padding-top').replace(/px/gi, '').toFloat() + _wrapper.css('padding-bottom').replace(/px/gi, '').toFloat(),
 			margins				=	_wrapper.find('.simplayer-title').margin('vertical') + _wrapper.find('.simplayer-buttons').margin('vertical'),
@@ -94,9 +95,13 @@ var simplayer					=	function(title,content,buttons,zindex,maxWidth,touchClose) {
 			_tray.unbind('mousedown').mousedown(function() { _self.close(); });
 		}
 
-		TweenMax.to(_wrapper, 0, _tween);
+		setTimeout(function(){
+            //_wrapper.css('visibility', '');
+    		TweenMax.to(_wrapper, 0, _tween);
+        }, 100);
+
 		TweenMax.to(_tray, 0, {opacity: 0, onComplete: function() {
-			TweenMax.to(_tray, _duration, {opacity: 1});
+			TweenMax.to(_tray, _duration, {delay: 0.1, opacity: 1});
 		}});
 	};
 

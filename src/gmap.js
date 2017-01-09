@@ -49,6 +49,14 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 		}
 	};
 
+	this.update = function(lat, lng)
+	{
+		var marker = new google.maps.Marker({
+			position: {lat: lat, lng: lng},
+			map: map
+		});
+	};
+
     this.route = function(origin, destination, travel_mode)
     {
         var request = {

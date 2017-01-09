@@ -436,7 +436,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 		map				=	null,
 		center_point	=	null,
         dir_service     =   null,
-        dir_display     =   null;
+        dir_display     =   null,
+        markers         =   [];
 
 	this.init = function()
     {
@@ -451,6 +452,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 					position: locs[i],
 					map: map
 				});
+
+                markers.push(marker);
 			}
 
             if (routing_options && routing_options.enabled) {
@@ -476,11 +479,23 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 
 	this.update = function(lat, lng)
 	{
+        self.clearMarkers();
 		var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
 			map: map
 		});
+        markers.push(marker);
+        map.setCenter({lat: lat, lng: lng});
 	};
+
+    this.clearMarkers = function()
+    {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+
+        markers = [];
+    };
 
     this.route = function(origin, destination, travel_mode)
     {

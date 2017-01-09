@@ -5,6 +5,7 @@ routing_options = {
     output_id
 }
 */
+window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
 var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 	var self			=	this,
 		map				=	null,
@@ -64,12 +65,22 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
     };
 
 	if (!window.google) {
-		$.when(
-			$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places"),
-			$.Deferred(function( deferred ){
-				$( deferred.resolve );
-			})
-		).done(self.init);
+		if (!window.usedGAPI[api_key]) {
+			$.when(
+				$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places"),
+				$.Deferred(function( deferred ){
+					$( deferred.resolve );
+				})
+			).done(self.init);
+		} else {
+			var watching = setInterval(function(){
+				if (window.google) {
+					clearInterval(watching);
+					watching = null;
+					self.init();
+				}
+			}, 50);
+		}
 	} else {
 		self.init();
 	}

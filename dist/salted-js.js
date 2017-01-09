@@ -319,23 +319,37 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
         });
 	};
  })(jQuery);
-;var autoAddress = function(api_key, callback) {
+;window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
+var autoAddress = function(api_key, callback) {
 	var self = this;
 	this.inputField = null;
 	this.init = function() {
 		if (!window.google) {
-			$.when(
-				$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places" ),
-				$.Deferred(function( deferred ){
-					$( deferred.resolve );
-				})
-			).done(function(){
-				if (callback) callback();
-			});
+			if (!window.usedGAPI[api_key]) {
+				window.usedGAPI[api_key] = true;
+				$.when(
+					$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places" ),
+					$.Deferred(function( deferred ){
+						$( deferred.resolve );
+					})
+				).done(function(){
+					if (callback) callback();
+				});
+			} else {
+				if (callback) {
+					var watching = setInterval(function(){
+						if (window.google) {
+							clearInterval(watching);
+							watching = null;
+							callback();
+						}
+					}, 50);
+				}
+			}
 		}
 		return self;
 	};
-	
+
 	/*this.fillInAddress = function() {
 		// Get the place details from the autocomplete object.
 		var place = self.inputField.getPlace();
@@ -343,7 +357,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		  document.getElementById(component).value = '';
 		  document.getElementById(component).disabled = false;
 		}
-		
+
 		// Get each component of the address from the place details
 		// and fill the corresponding field on the form.
 		for (var i = 0; i < place.address_components.length; i++) {
@@ -354,7 +368,7 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		  }
 		}
 	};*/
-	
+
 	this.gplacised = function(dom_id) {
 		// Create the autocomplete object, restricting the search to geographical
 		// location types.
@@ -366,9 +380,10 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 		// fields in the form.
 		//self.inputField.addListener('place_changed', self.fillInAddress);
 	};
-	
+
 	return this.init();
-};;/**
+};
+;/**
  * @file get_gutters.js
  *
  * Handle get element margin | padding 
@@ -415,6 +430,7 @@ routing_options = {
     output_id
 }
 */
+window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
 var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 	var self			=	this,
 		map				=	null,
@@ -474,12 +490,22 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
     };
 
 	if (!window.google) {
-		$.when(
-			$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places"),
-			$.Deferred(function( deferred ){
-				$( deferred.resolve );
-			})
-		).done(self.init);
+		if (!window.usedGAPI[api_key]) {
+			$.when(
+				$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places"),
+				$.Deferred(function( deferred ){
+					$( deferred.resolve );
+				})
+			).done(self.init);
+		} else {
+			var watching = setInterval(function(){
+				if (window.google) {
+					clearInterval(watching);
+					watching = null;
+					self.init();
+				}
+			}, 50);
+		}
 	} else {
 		self.init();
 	}

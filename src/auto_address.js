@@ -1,20 +1,34 @@
+window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
 var autoAddress = function(api_key, callback) {
 	var self = this;
 	this.inputField = null;
 	this.init = function() {
 		if (!window.google) {
-			$.when(
-				$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places" ),
-				$.Deferred(function( deferred ){
-					$( deferred.resolve );
-				})
-			).done(function(){
-				if (callback) callback();
-			});
+			if (!window.usedGAPI[api_key]) {
+				window.usedGAPI[api_key] = true;
+				$.when(
+					$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places" ),
+					$.Deferred(function( deferred ){
+						$( deferred.resolve );
+					})
+				).done(function(){
+					if (callback) callback();
+				});
+			} else {
+				if (callback) {
+					var watching = setInterval(function(){
+						if (window.google) {
+							clearInterval(watching);
+							watching = null;
+							callback();
+						}
+					}, 50);
+				}
+			}
 		}
 		return self;
 	};
-	
+
 	/*this.fillInAddress = function() {
 		// Get the place details from the autocomplete object.
 		var place = self.inputField.getPlace();
@@ -22,7 +36,7 @@ var autoAddress = function(api_key, callback) {
 		  document.getElementById(component).value = '';
 		  document.getElementById(component).disabled = false;
 		}
-		
+
 		// Get each component of the address from the place details
 		// and fill the corresponding field on the form.
 		for (var i = 0; i < place.address_components.length; i++) {
@@ -33,7 +47,7 @@ var autoAddress = function(api_key, callback) {
 		  }
 		}
 	};*/
-	
+
 	this.gplacised = function(dom_id) {
 		// Create the autocomplete object, restricting the search to geographical
 		// location types.
@@ -45,6 +59,6 @@ var autoAddress = function(api_key, callback) {
 		// fields in the form.
 		//self.inputField.addListener('place_changed', self.fillInAddress);
 	};
-	
+
 	return this.init();
 };

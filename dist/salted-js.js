@@ -814,7 +814,7 @@ Array.prototype.equals = function (array) {
     return true;
 };
 // Hide method from for-in loops
-Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+// Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
 Array.prototype.removeByValue = function()
 {

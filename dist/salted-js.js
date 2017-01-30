@@ -814,7 +814,7 @@ Array.prototype.equals = function (array) {
     return true;
 };
 // Hide method from for-in loops
-// Object.defineProperty(Array.prototype, "equals", {enumerable: false});
+Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
 Array.prototype.removeByValue = function()
 {
@@ -828,16 +828,14 @@ Array.prototype.removeByValue = function()
     return this;
 };
 
-// if (Object.prototype.clone === undefined) {
-//     Object.prototype.clone = function()
-//     {
-//         var copy = this.constructor();
-//         for (var attr in this) {
-//             if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
-//         }
-//         return copy;
-//     };
-// }
+Object.prototype.duplicate = function()
+{
+    var copy = this.constructor();
+    for (var attr in this) {
+        if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
+    }
+    return copy;
+};
 
 if (typeof module === 'undefined') {
     /*

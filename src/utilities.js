@@ -117,15 +117,6 @@ Array.prototype.removeByValue = function()
     return this;
 };
 
-Object.prototype.duplicate = function()
-{
-    var copy = this.constructor();
-    for (var attr in this) {
-        if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
-    }
-    return copy;
-};
-
 if (typeof module === 'undefined') {
     /*
      * anonymous functions

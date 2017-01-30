@@ -766,9 +766,9 @@ Number.prototype.DoubleDigit = function() {
     return this < 10 ? ('0' + s) : s;
 };
 
-Date.prototype.now = function() {
-    return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
-};
+// Date.prototype.now = function() {
+//     return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
+// };
 
 Array.prototype.shuffle = function() {
     var array = this;

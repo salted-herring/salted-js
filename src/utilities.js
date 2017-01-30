@@ -55,9 +55,9 @@ Number.prototype.DoubleDigit = function() {
     return this < 10 ? ('0' + s) : s;
 };
 
-// Date.prototype.now = function() {
-//     return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
-// };
+Date.prototype.now = function() {
+    return this.getFullYear() + '-' + (this.getMonth() + 1).DoubleDigit() + '-' + this.getDate().DoubleDigit() + ' ' +  this.getHours().DoubleDigit() + ':' + this.getMinutes().DoubleDigit() + ':' + this.getSeconds().DoubleDigit();
+};
 
 Array.prototype.shuffle = function() {
     var array = this;
@@ -79,29 +79,29 @@ Array.prototype.shuffle = function() {
     return array;
 };
 
-// Array.prototype.equals = function (array) {
-//     // if the other array is a falsy value, return
-//     if (!array)
-//         return false;
-//
-//     // compare lengths - can save a lot of time
-//     if (this.length != array.length)
-//         return false;
-//
-//     for (var i = 0, l=this.length; i < l; i++) {
-//         // Check if we have nested arrays
-//         if (this[i] instanceof Array && array[i] instanceof Array) {
-//             // recurse into the nested arrays
-//             if (!this[i].equals(array[i]))
-//                 return false;
-//         }
-//         else if (this[i] != array[i]) {
-//             // Warning - two different object instances will never be equal: {x:20} != {x:20}
-//             return false;
-//         }
-//     }
-//     return true;
-// };
+Array.prototype.equals = function (array) {
+    // if the other array is a falsy value, return
+    if (!array)
+        return false;
+
+    // compare lengths - can save a lot of time
+    if (this.length != array.length)
+        return false;
+
+    for (var i = 0, l=this.length; i < l; i++) {
+        // Check if we have nested arrays
+        if (this[i] instanceof Array && array[i] instanceof Array) {
+            // recurse into the nested arrays
+            if (!this[i].equals(array[i]))
+                return false;
+        }
+        else if (this[i] != array[i]) {
+            // Warning - two different object instances will never be equal: {x:20} != {x:20}
+            return false;
+        }
+    }
+    return true;
+};
 // Hide method from for-in loops
 // Object.defineProperty(Array.prototype, "equals", {enumerable: false});
 
@@ -117,16 +117,16 @@ Array.prototype.removeByValue = function()
     return this;
 };
 
-if (Object.prototype.clone === undefined) {
-    Object.prototype.clone = function()
-    {
-        var copy = this.constructor();
-        for (var attr in this) {
-            if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
-        }
-        return copy;
-    };
-}
+// if (Object.prototype.clone === undefined) {
+//     Object.prototype.clone = function()
+//     {
+//         var copy = this.constructor();
+//         for (var attr in this) {
+//             if (this.hasOwnProperty(attr)) copy[attr] = this[attr];
+//         }
+//         return copy;
+//     };
+// }
 
 if (typeof module === 'undefined') {
     /*

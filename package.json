@@ -1,50 +1,57 @@
 {
-  "name": "nightmare",
-  "version": "2.9.1",
-  "license": "MIT",
-  "main": "lib/nightmare.js",
+  "name": "salted-js",
+  "version": "1.0.0",
+  "description": "Salted JS is the base javascript library that Salted Herring uses to develop most of our websites.",
+  "main": "Gruntfile.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "basic-auth": "^1.1.0",
+    "basic-auth-connect": "^1.0.0",
+    "chai": "^3.5.0",
+    "chai-as-promised": "^5.3.0",
+    "debug": "^2.6.0",
+    "deep-defaults": "^1.0.4",
+    "defaults": "^1.0.3",
+    "electron": "^1.5.0",
+    "enqueue": "^1.0.2",
+    "express": "^4.14.1",
+    "function-source": "^0.1.0",
+    "grunt": "^0.4.5",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-qunit": "^1.2.0",
+    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-watch": "^1.0.0",
+    "jsesc": "^0.5.0",
+    "minstache": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "mocha-generators": "^1.2.0",
+    "multer": "^1.1.0",
+    "once": "^1.4.0",
+    "pngjs": "^2.3.1",
+    "rimraf": "^2.5.4",
+    "serve-static": "^1.11.2",
+    "sliced": "^1.0.1",
+    "split": "^1.0.0",
+    "split2": "^2.1.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.5.3",
+    "nightmare": "^2.9.1"
+  },
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/segmentio/nightmare.git"
+    "url": "git+https://github.com/salted-herring/salted-js.git"
   },
-  "author": "Segment",
-  "keywords": [
-    "nightmare",
-    "electron"
-  ],
-  "description": "A high-level browser automation library.",
-  "dependencies": {
-    "debug": "^2.2.0",
-    "deep-defaults": "^1.0.3",
-    "defaults": "^1.0.2",
-    "electron": "^1.4.4",
-    "enqueue": "^1.0.2",
-    "function-source": "^0.1.0",
-    "jsesc": "^0.5.0",
-    "minstache": "^1.2.0",
-    "mkdirp": "^0.5.1",
-    "once": "^1.3.3",
-    "rimraf": "^2.4.3",
-    "sliced": "1.0.1",
-    "split2": "^2.0.1"
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/salted-herring/salted-js/issues"
   },
-  "devDependencies": {
-    "basic-auth": "^1.0.3",
-    "basic-auth-connect": "^1.0.0",
-    "chai": "^3.4.1",
-    "chai-as-promised": "^5.3.0",
-    "express": "^4.13.3",
-    "mocha": "^2.3.0",
-    "mocha-generators": "^1.2.0",
-    "multer": "1.1.0",
-    "pngjs": "^2.2.0",
-    "serve-static": "^1.10.0",
-    "split": "^1.0.0"
-  },
-  "engines": {
-    "node":">=4.0.0"
-  }
+  "homepage": "https://github.com/salted-herring/salted-js#readme"
 }

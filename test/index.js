@@ -139,98 +139,98 @@ describe('Array.removeByValue', function()
 //         done();
 //     });
 // });
-
-describe('test SH website main nav items', function()
-{
-    this.timeout(15000);
-    it('should find 8 items', function(done)
-    {
-        var nightmare = Nightmare();
-
-        nightmare
-            .goto('https://www.saltedherring.com')
-            .wait('#main_nav a')
-            .evaluate(function () {
-                return $('#main_nav a').length
-            })
-            .end()
-            .then(function(link) {
-                link.should.equal(8);
-                done();
-            })
-            .catch(done);
-    });
-
-    it('should find 4 items', function(done)
-    {
-        var nightmare = Nightmare();
-
-        nightmare
-            .goto('https://www.saltedherring.com')
-            .wait('#main_nav a')
-            .evaluate(function () {
-                return $('#main_nav a').length
-            })
-            .end()
-            .then(function(link) {
-                link.should.equal(4);
-                done();
-            })
-            .catch(done);
-    });
-});
-
-describe('Test Salted JS library', function()
-{
-    this.timeout(3600000);
-    it('kmark function to add a thousand separator to a STRING.', function(done)
-    {
-        var nightmare = Nightmare();
-
-        nightmare
-            .goto('https://www.nzyogo.co.nz')
-            .evaluate(function () {
-                return ('1024').kmark();
-            })
-            .end()
-            .then(function(result) {
-                result.should.equal('1,024');
-                done();
-            })
-            .catch(done);
-    });
-
-    it('kmark function to add a thousand separator to an INTEGER', function(done)
-    {
-        var nightmare = Nightmare();
-
-        nightmare
-            .goto('https://www.nzyogo.co.nz')
-            .evaluate(function () {
-                return (1024).kmark();
-            })
-            .end()
-            .then(function(result) {
-                result.should.equal('1,024');
-                done();
-            })
-            .catch(done);
-    });
-
-    it('toDollar function to format an INTEGER: 1024 to $1,024.00', function(done)
-    {
-        var nightmare = Nightmare();
-
-        nightmare
-            .goto('https://www.nzyogo.co.nz')
-            .evaluate(function () {
-                return (1024).toDollar();
-            })
-            .end()
-            .then(function(result) {
-                result.should.equal('$1,024.00');
-                done();
-            })
-            .catch(done);
-    });
-});
+//
+// describe('test SH website main nav items', function()
+// {
+//     this.timeout(15000);
+//     it('should find 8 items', function(done)
+//     {
+//         var nightmare = Nightmare();
+//
+//         nightmare
+//             .goto('https://www.saltedherring.com')
+//             .wait('#main_nav a')
+//             .evaluate(function () {
+//                 return $('#main_nav a').length
+//             })
+//             .end()
+//             .then(function(link) {
+//                 link.should.equal(8);
+//                 done();
+//             })
+//             .catch(done);
+//     });
+//
+//     it('should find 4 items', function(done)
+//     {
+//         var nightmare = Nightmare();
+//
+//         nightmare
+//             .goto('https://www.saltedherring.com')
+//             .wait('#main_nav a')
+//             .evaluate(function () {
+//                 return $('#main_nav a').length
+//             })
+//             .end()
+//             .then(function(link) {
+//                 link.should.equal(4);
+//                 done();
+//             })
+//             .catch(done);
+//     });
+// });
+//
+// describe('Test Salted JS library', function()
+// {
+//     this.timeout(3600000);
+//     it('kmark function to add a thousand separator to a STRING.', function(done)
+//     {
+//         var nightmare = Nightmare();
+//
+//         nightmare
+//             .goto('https://www.nzyogo.co.nz')
+//             .evaluate(function () {
+//                 return ('1024').kmark();
+//             })
+//             .end()
+//             .then(function(result) {
+//                 result.should.equal('1,024');
+//                 done();
+//             })
+//             .catch(done);
+//     });
+//
+//     it('kmark function to add a thousand separator to an INTEGER', function(done)
+//     {
+//         var nightmare = Nightmare();
+//
+//         nightmare
+//             .goto('https://www.nzyogo.co.nz')
+//             .evaluate(function () {
+//                 return (1024).kmark();
+//             })
+//             .end()
+//             .then(function(result) {
+//                 result.should.equal('1,024');
+//                 done();
+//             })
+//             .catch(done);
+//     });
+//
+//     it('toDollar function to format an INTEGER: 1024 to $1,024.00', function(done)
+//     {
+//         var nightmare = Nightmare();
+//
+//         nightmare
+//             .goto('https://www.nzyogo.co.nz')
+//             .evaluate(function () {
+//                 return (1024).toDollar();
+//             })
+//             .end()
+//             .then(function(result) {
+//                 result.should.equal('$1,024.00');
+//                 done();
+//             })
+//             .catch(done);
+//     });
+// });

@@ -6,7 +6,7 @@ routing_options = {
 }
 */
 window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
-var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI) {
+var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI, disableScroll) {
 	var self			=	this,
 		map				=	null,
 		center_point	=	null,
@@ -14,10 +14,6 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
         dir_display     =   null,
         markers         =   [];
 
-    this.disableScroll  =   function()
-                            {
-                                map.setOptions({scrollwheel: false});
-                            };
 	this.init = function()
     {
 		if (locs && locs.length > 0) {
@@ -39,6 +35,10 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
                 ];
 
                 map.setOptions({styles: noPoi});
+            }
+
+            if (disableUI) {
+                map.setOptions({scrollwheel: false});
             }
 
 

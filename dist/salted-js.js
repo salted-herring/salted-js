@@ -453,6 +453,21 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
 			  center: center_point,
               disableDefaultUI: (disableUI === undefined || disableUI === null) ? false : disableUI
 			});
+
+            if (disableUI) {
+                var noPoi = [
+                    {
+                        featureType: "poi",
+                        stylers: [
+                          { visibility: "off" }
+                        ]
+                    }
+                ];
+
+                map.setOptions({styles: noPoi});
+            }
+
+
 			for (var i = 0; i < locs.length; i++) {
 				var marker = new google.maps.Marker({
 					position: locs[i],

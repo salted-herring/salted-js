@@ -486,6 +486,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
 	this.update = function(lat, lng)
 	{
         self.clearMarkers();
+        lat = typeof(lat) == 'string' ? lat.toFloat() : lat;
+        lng = typeof(lng) == 'string' ? lng.toFloat() : lng;
 		var marker = new google.maps.Marker({
 			position: {lat: lat, lng: lng},
 			map: map

@@ -519,6 +519,7 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 
 	if (!window.google) {
 		if (!window.usedGAPI[api_key]) {
+            window.usedGAPI[api_key] = true;
 			$.when(
 				$.getScript( "https://maps.googleapis.com/maps/api/js?key=" + api_key + "&libraries=places"),
 				$.Deferred(function( deferred ){

@@ -6,7 +6,7 @@ routing_options = {
 }
 */
 window.usedGAPI = window.usedGAPI ? window.usedGAPI : [];
-var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
+var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI) {
 	var self			=	this,
 		map				=	null,
 		center_point	=	null,
@@ -20,7 +20,8 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options) {
 			center_point = locs[0];
 			map = new google.maps.Map(document.getElementById(map_id), {
 			  zoom: zoom_rate ? zoom_rate : 18,
-			  center: center_point
+			  center: center_point,
+              disableDefaultUI: (disableUI === undefined || disableUI === null) ? false : disableUI
 			});
 			for (var i = 0; i < locs.length; i++) {
 				var marker = new google.maps.Marker({

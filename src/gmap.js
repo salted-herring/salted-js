@@ -14,6 +14,10 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
         dir_display     =   null,
         markers         =   [];
 
+    this.disableScroll  =   function()
+                            {
+                                map.setOptions({scrollwheel: false});
+                            };
 	this.init = function()
     {
 		if (locs && locs.length > 0) {

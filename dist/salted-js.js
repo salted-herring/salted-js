@@ -428,7 +428,24 @@ var autoAddress = function(api_key, callback) {
 		return el.margin(dimension) + el.padding(diemension);
 	};
 	
- })(jQuery);;/*
+ })(jQuery);;(function($) {
+
+    $.fn.maxHeight = function() {
+        var tallest =   null,
+            highest =   0;
+        this.each(function(i, el)
+        {
+            if ($(this).outerHeight() > highest) {
+                highest = $(this).outerHeight();
+                tallest = $(this);
+            }
+        });
+
+        return tallest;
+    };
+
+ })(jQuery);
+;/*
 routing_options = {
     enabled,
     input_id,

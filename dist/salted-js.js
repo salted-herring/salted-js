@@ -636,7 +636,7 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
             api         =   self.data('api'),
             input       =   self.data('input'),
             output      =   self.data('output'),
-            map         =   new gmap(api, self.attr('id'), [{lat: lat, lng: lng}], zoom, {enabled: true, input_id: input, output_id: output});
+            map         =   new gmap(api, self.attr('id'), [{lat: lat, lng: lng}], zoom, {enabled: (input !== undefined ? true : false), input_id: input, output_id: output});
 
         return map;
     };

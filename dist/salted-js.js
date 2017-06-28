@@ -355,6 +355,8 @@ var autoAddress = function(api_key, callback) {
 		return self;
 	};
 
+    this.activate = callback;
+
 	/*this.fillInAddress = function() {
 		// Get the place details from the autocomplete object.
 		var place = self.inputField.getPlace();

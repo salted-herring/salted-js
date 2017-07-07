@@ -17,7 +17,19 @@ var gmap = function(api_key, map_id, locs, zoom_rate, routing_options, disableUI
 	this.init = function()
     {
 		if (locs && locs.length > 0) {
-			center_point = locs[0];
+            if (locs.length > 1) {
+                var bound = new google.maps.LatLngBounds();
+
+                for (i = 0; i < locs.length; i++) {
+                    bound.extend( new google.maps.LatLng(locs[i].lat, locs[i].lng) );
+                }
+
+                center_point = bound.getCenter();
+
+            } else {
+                center_point = locs[0];
+            }
+            
 			map = new google.maps.Map(document.getElementById(map_id), {
 			  zoom: zoom_rate ? zoom_rate : 18,
 			  center: center_point,

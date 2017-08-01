@@ -405,30 +405,33 @@ var autoAddress = function(api_key, callback) {
                                     }
 
                                     return prTopOffset;
+                                },
+            updatePos       =   function(e)
+                                {
+                                    var offset = $(window).scrollTop() - myYOffset + topOffset();
+                                    if (offset >= 0) {
+                                        if (offset + me.outerHeight() + (myYOffset - parentYOffset) > tallest_uncle.outerHeight())
+                                        {
+                                            offset = tallest_uncle.outerHeight() - (myYOffset - parentYOffset) - me.outerHeight();
+                                        }
+                                    } else {
+                                        offset = 0;
+                                    }
+
+                                    me.css({
+                                        '-webkit-transform': 'translateY(' + offset + 'px)',
+                                        'transform': 'translateY(' + offset + 'px)'
+                                    });
                                 };
 
         $(this).addClass('fixy');
         // console.log('relative offset: ' + (myYOffset - parentYOffset));
-        $(window).scroll(function(e)
+        $(window).scroll(updatePos).resize(function(e)
         {
-            var offset = $(window).scrollTop() - myYOffset + topOffset();
-            if (offset >= 0) {
-                if (offset + me.outerHeight() + (myYOffset - parentYOffset) > tallest_uncle.outerHeight())
-                {
-                    offset = tallest_uncle.outerHeight() - (myYOffset - parentYOffset) - me.outerHeight();
-                }
-            } else {
-                offset = 0;
-            }
-
-            me.css({
-                '-webkit-transform': 'translateY(' + offset + 'px)',
-                'transform': 'translateY(' + offset + 'px)'
-            });
-        }).resize(function(e)
-        {
+            me.removeAttr('style');
             myYOffset       =   me.offset().top;
             parentYOffset   =   parent.offset().top;
+            updatePos();
         });
 
         return this;

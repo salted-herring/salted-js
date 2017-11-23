@@ -1112,20 +1112,6 @@ function clone(obj) {
     return copy;
 }
 
-// Get IE or Edge browser version
-var version = detectIE();
-
-if (version === false) {
-  document.getElementById('result').innerHTML = '<s>IE/Edge</s>';
-} else if (version >= 12) {
-  document.getElementById('result').innerHTML = 'Edge ' + version;
-} else {
-  document.getElementById('result').innerHTML = 'IE ' + version;
-}
-
-// add details to debug result
-document.getElementById('details').innerHTML = window.navigator.userAgent;
-
 /**
  * detect IE
  * returns version of IE or false, if browser is not Internet Explorer

@@ -315,32 +315,18 @@ var ajaxRequest = function(url, method, data, onDone, onFail) {
 
             callbacks.onstart();
 
-            if (axios) {
-                console.log('using axios');
-                axios.post(endpoint, formData).then(function(response)
-                {
-                    lockdown    =   false;
-                    callbacks.success(response.data);
-                }).catch(function (error)
-                {
-                    lockdown    =   false;
-                    callbacks.fail(error.data);
-                });
-            } else {
-                console.log('using ajax');
-                $.ajax({
-                    url         :   endpoint,
-                    type        :   method,
-                    data        :   formData,
-                    cache       :   false,
-                    contentType :   false,
-                    processData :   false
-                }).done(callbacks.success).fail(callbacks.fail).always(function(response)
-                {
-                    lockdown = false;
-                    callbacks.done(response);
-                });
-            }
+            $.ajax({
+                url         :   endpoint,
+                type        :   method,
+                data        :   formData,
+                cache       :   false,
+                contentType :   false,
+                processData :   false
+            }).done(callbacks.success).fail(callbacks.fail).always(function(response)
+            {
+                lockdown = false;
+                callbacks.done(response);
+            });
         });
     };
  })(jQuery);
